@@ -1,8 +1,7 @@
 ---
 title: "Git 毎回パスワードを聞かれる問題について sourcetree GitHub"
-date: "2019-02-27"
-categories: 
-  - "programming"
+type: "tech"
+published: true
 coverImage: "サンプル.jpg"
 ---
 
