@@ -3,7 +3,7 @@ title: "AWSのSystemsManager経由でTablePlusを使う時の設定"
 emoji: "🐙"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS","SSM","SystemsManager","TablePlus"]
-published: false
+published: true
 ---
 
 ## はじめに
