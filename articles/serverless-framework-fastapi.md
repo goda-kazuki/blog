@@ -100,6 +100,12 @@ S3を操作するAPIやDynamoDBにアクセスするAPIがあった時、
 関数が1つだと、APIに対して不必要なポリシーが渡ってしまうのでベストとは言えません。
 もし、細かく制御したいのであれば、複数Lambda関数を作成するのが良いのかなと思います。
 
+## 参考にさせていただいた記事
+https://zenn.dev/nameless_sn/articles/fastapi_tutorial_for_rest
+https://zenn.dev/hayata_yamamoto/articles/781efca1687272
+https://techblog.raksul.com/entry/2023/06/30/081048
+https://aws.amazon.com/jp/builders-flash/202304/api-development-sam-fastapi-mangum/
+
 ## 成果物
 見たい人がいれば
 
