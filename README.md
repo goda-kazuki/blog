@@ -9,3 +9,17 @@ npx zenn new:article --slug 記事のスラッグ --title タイトル --type te
 # プレビュー
 npx zenn preview
 ```
+
+# 記事テンプレ
+
+```Markdown
+# はじめに
+
+# 問題
+
+# 解決方法
+
+# おわりに
+
+# 参考
+```
