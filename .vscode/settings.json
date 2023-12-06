@@ -1,0 +1,10 @@
+{
+    "cSpell.words": [
+        "pydantic"
+    ],
+    "markdownlint.config": {
+        "MD041": false,
+        "MD003": false,
+        "MD025": false
+    }
+}
