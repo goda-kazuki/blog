@@ -2,7 +2,7 @@
 title: "defaultdictを使って楽に配列カウントをする"
 emoji: "🕌"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: []
+topics: ["python","defaultdict"]
 published: true
 ---
 
