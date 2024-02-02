@@ -142,6 +142,8 @@ def lambda_handler(event, context):
                 print(f"No updates are needed for {stack_name}.")
             else:
                 raise
+        finally:
+            stop_db_cluster(template["db_cluster_identifier"])
 
     return {
         "statusCode": 200,
