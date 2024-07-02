@@ -28,7 +28,7 @@ Pythonにデフォルトでdataclassがあります。 アノテーションは�
 
 intの定義のところにfloatを突っ込むとfloatが登録されてしまう
 
-```
+```Python
 @dataclass
 class User2:
     name: str
@@ -43,7 +43,7 @@ print(user2)
 
 Pythonのバージョンやpipenvは揃える必要はありません。 pydanticのみインストールしてください。
 
-```
+```shell
 $pipenv --python 3.9.16
 $pipenv shell
 $pip install pydantic
@@ -57,7 +57,7 @@ $pip install pydantic
 
 dictでモデルを辞書に変換することができます。 parse\_objで辞書からクラスを作成することができます。
 
-```
+```Python
 user = User(id=123, age=27)
 user_dict = user.dict()
 user_dict["test"] = "aaa"
@@ -68,7 +68,7 @@ user2 = User.parse_obj(user_dict)
 
 バリデーションのエラーに引っかかった場合は、ValidationErrorがraiseされるので、 try,exceptで補足してあげることで管理することが可能です。
 
-```
+```Python
 class User(BaseModel):
     id: int
     age: int
@@ -84,7 +84,7 @@ except ValidationError as e:
 
 デフォルトの型だけでは不十分な場合、自分でバリデーションを作成することができます。 また、raiseするエラーも自由なので、エラーによって後の処理を管理することが可能です。
 
-```
+```Python
 class User(BaseModel):
     id: int
     age: int
@@ -109,7 +109,7 @@ except ValueError as e:
 
 Field関数を使えば、よくあるパターンに関しては対応することができます。 [https://docs.pydantic.dev/usage/schema/#field-customization](https://docs.pydantic.dev/usage/schema/#field-customization)
 
-```
+```Python
 class User(BaseModel):
     age: int = Field(..., ge=0, le=100)
 
@@ -126,7 +126,7 @@ except ValidationError as e:
 
 それぞれ分けたい時は以下のような記述をします。
 
-```
+```Python
 class User(BaseModel):
     id: int  # 必須
     age: Optional[int]  # 必須ではない
@@ -140,7 +140,7 @@ print(user)
 
 日付やuuidなんかは動的に生成したい時があると思いますが、 Field関数とdefault\_factoryを使うことで叶えられます。
 
-```
+```Python
 class User(BaseModel):
     now: datetime = Field(default_factory=datetime.now)
 
@@ -153,7 +153,7 @@ print(user)
 
 以下の例ではidはintが正しいのに、モデルをインスタンス化する際にfloatの型を渡しています。 pydanticでは出力結果の正当性を保証するので、暗黙的にintに変換されてしまいます。
 
-```
+```Python
 class User(BaseModel):
     id: int
 
@@ -166,7 +166,7 @@ print(user)
 
 以下は先ほどの意図しない変換を防ぐ例になります。
 
-```
+```Python
 class User(BaseModel):
     id: StrictInt
 
@@ -184,7 +184,7 @@ except ValidationError as e:
 
 決まった値しか入力されたくないフィールドってあると思います。 Booleanで解決できればいいですが、 もう少し種類が多い時、Literal型を使えば解決できます。
 
-```
+```Python
 class User(BaseModel):
     kind: Literal[1, 2, 3]
 
@@ -207,7 +207,7 @@ except ValidationError as e:
 
 以下は2文字以上、10文字以下しか受け付けないようなフィールドを宣言しています。
 
-```
+```Python
 class User(BaseModel):
     id: constr(min_length=2, max_length=10)
 
@@ -226,7 +226,7 @@ except ValidationError as e:
 
 constrなどで基本の形のバリデーションはできますが、 全てに対応することは難しく、独自のバリデーターを作成したい時があると思います。 基本の形は以下になります。
 
-```
+```Python
 class User(BaseModel):
     id: str
 
@@ -249,7 +249,7 @@ except ValidationError as e:
 
 そんな時はバリデーターを再利用することができます。
 
-```
+```Python
 def id_is_prefix_a(id: str):
     if not id[0] == "a":
         raise ValidationError
@@ -273,7 +273,7 @@ except ValidationError as e:
 
 フォームなどでユーザーが入力した時にその値がバリデーションエラーにかかった場合、 適切なメッセージを出したいと思いますが、デフォルトでは英語で返却されます。 以下のような形で定義すると、自由に変えることができます。
 
-```
+```Python
 class User(BaseModel):
     id: str
 
@@ -296,7 +296,7 @@ except ValidationError as e:
 
 モデルを別で利用する時に、辞書形式の方が扱いやすいことがあると思います。 そんな時は、dict関数を使用することで叶えることができます。
 
-```
+```Python
 class User(BaseModel):
     id: str
     name: str
@@ -313,7 +313,7 @@ try:
 
 frozenをTrueにしてあげると、イミュータブルになる。 ただし、ミュータブルなフィールド(リストなど)がイミュータブルになるわけではないので注意
 
-```
+```Python
 class User(BaseModel):
     id: int
     age: int
