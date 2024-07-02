@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
-        "pydantic"
+        "pydantic",
+        "timestream"
     ],
     "markdownlint.config": {
         "MD041": false,
