@@ -1,5 +1,5 @@
 ---
-title: "Amazon Timestream にデータ投入するPythonプログラム"
+title: "Amazon Timestreamへのデータ投入をPythonで簡単に実現！"
 emoji: "👏"
 type: "tech"
 topics: ["AWS","Timestream","Python","boto3"]
