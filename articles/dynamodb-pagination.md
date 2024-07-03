@@ -9,9 +9,8 @@ published: true
 ## はじめに
 
 Amazon DynamoDB を使ってデータを取得する時、対象のデータ量が多すぎると一度では取得することができません。
-<https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination>
-
 公式ページには、 LastEvaluatedKey があればループして再度データを取得するように案内されています。
+<https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination>
 
 その案内通りループしてもいいのですが、boto3にはget_paginatorという便利な関数があるので、それを使ってみようと思います。
 <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb/client/get_paginator.html>
