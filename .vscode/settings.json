@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "boto3",
         "pipenv",
         "pydantic",
         "timestream"
