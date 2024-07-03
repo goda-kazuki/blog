@@ -2,7 +2,7 @@
 title: "DynamoDBの大量データ取得を簡単にするget_paginatorの使用例"
 emoji: "😺"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: []
+topics: ["aws","boto3","DynamoDB"]
 published: true
 ---
 
