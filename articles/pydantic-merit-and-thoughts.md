@@ -8,25 +8,25 @@ coverImage: "Python開発に欠かせない！】pydanticの使い方とメリ�
 
 ## はじめに
 
-pythonで堅牢な開発をしたい時、pydanticが候補に上がってくると思います。 基本的な使い方、よく使いそうなことをまとめてみました。
+python で堅牢な開発をしたい時、pydantic が候補に上がってくると思います。 基本的な使い方、よく使いそうなことをまとめてみました。
 
 ## 想定読者
 
-Pythonを最近触り始めて、型がある開発をしたいと思って、pydanticの存在を知った人 pydanticでできることをざっくり知りたい人
+Python を最近触り始めて、型がある開発をしたいと思って、pydantic の存在を知った人 pydantic でできることをざっくり知りたい人
 
-## pydanticとは
+## pydantic とは
 
-[pydantic](https://docs.pydantic.dev/)はデータのバリデーションや型ヒントを提供します。 これにより、Pythonで安全な開発を行うことができます。
+[pydantic](https://docs.pydantic.dev/)はデータのバリデーションや型ヒントを提供します。 これにより、Python で安全な開発を行うことができます。
 
-逆にPythonの書きやすさみたいなものは少し犠牲にするかもしれませんが、 仕事で使うなら、安全さを優先したいかなと思います。
+逆に Python の書きやすさみたいなものは少し犠牲にするかもしれませんが、 仕事で使うなら、安全さを優先したいかなと思います。
 
-なお、Pydanticは入力ではなく、出力モデルの型と制約を保証するものになります。 (intの定義のところにfloatを突っ込むとintに変換されてしまう)
+なお、Pydantic は入力ではなく、出力モデルの型と制約を保証するものになります。 (int の定義のところに float を突っ込むと int に変換されてしまう)
 
-## dataclassじゃだめなのか
+## dataclass じゃだめなのか
 
-Pythonにデフォルトでdataclassがあります。 アノテーションはされるんですが、厳密ではありません。
+Python にデフォルトで dataclass があります。 アノテーションはされるんですが、厳密ではありません。
 
-intの定義のところにfloatを突っ込むとfloatが登録されてしまう
+int の定義のところに float を突っ込むと float が登録されてしまう
 
 ```Python
 @dataclass
@@ -41,21 +41,21 @@ print(user2)
 
 ## 準備
 
-Pythonのバージョンやpipenvは揃える必要はありません。 pydanticのみインストールしてください。
+Python のバージョンや pipenv は揃える必要はありません。 pydantic のみインストールしてください。
 
 ```shell
 $pipenv --python 3.9.16
 $pipenv shell
-$pip install pydantic
+$pipenv install 'pydantic<2'
 ```
 
 ## モデル
 
 [https://docs.pydantic.dev/usage/models/](https://docs.pydantic.dev/usage/models/)
 
-### dictとparse\_objについて
+### dict と parse_obj について
 
-dictでモデルを辞書に変換することができます。 parse\_objで辞書からクラスを作成することができます。
+dict でモデルを辞書に変換することができます。 parse_obj で辞書からクラスを作成することができます。
 
 ```Python
 user = User(id=123, age=27)
@@ -66,7 +66,7 @@ user2 = User.parse_obj(user_dict)
 
 ### バリデーションのエラーについて
 
-バリデーションのエラーに引っかかった場合は、ValidationErrorがraiseされるので、 try,exceptで補足してあげることで管理することが可能です。
+バリデーションのエラーに引っかかった場合は、ValidationError が raise されるので、 try,except で補足してあげることで管理することが可能です。
 
 ```Python
 class User(BaseModel):
@@ -82,7 +82,7 @@ except ValidationError as e:
 
 ### 自作のバリデーション作成
 
-デフォルトの型だけでは不十分な場合、自分でバリデーションを作成することができます。 また、raiseするエラーも自由なので、エラーによって後の処理を管理することが可能です。
+デフォルトの型だけでは不十分な場合、自分でバリデーションを作成することができます。 また、raise するエラーも自由なので、エラーによって後の処理を管理することが可能です。
 
 ```Python
 class User(BaseModel):
@@ -103,11 +103,11 @@ except ValueError as e:
     # [{"loc": ["age"],"msg": "範囲外のageが入力されました。","type": "value_error"}]
 ```
 
-### Fieldを使った一般的なバリデーション
+### Field を使った一般的なバリデーション
 
 先ほどの自作バリデーション、自由度は高いのですが よくあるパターンに対しても書かないといけないのは大変ですよね。
 
-Field関数を使えば、よくあるパターンに関しては対応することができます。 [https://docs.pydantic.dev/usage/schema/#field-customization](https://docs.pydantic.dev/usage/schema/#field-customization)
+Field 関数を使えば、よくあるパターンに関しては対応することができます。 [https://docs.pydantic.dev/usage/schema/#field-customization](https://docs.pydantic.dev/usage/schema/#field-customization)
 
 ```Python
 class User(BaseModel):
@@ -120,7 +120,7 @@ except ValidationError as e:
     # [{"loc": ["age"],"msg": "ensure this value is less than or equal to 100","type": "value_error.number.not_le","ctx": {"limit_value": 100}}]
 ```
 
-自作のバリデーションを作る前にFieldで補えないか確認するのが良さそうですね。
+自作のバリデーションを作る前に Field で補えないか確認するのが良さそうですね。
 
 ### 必須と必須ではないフィールドを分ける
 
@@ -138,7 +138,7 @@ print(user)
 
 ### 動的なデフォルト値を持つフィールドの作り方
 
-日付やuuidなんかは動的に生成したい時があると思いますが、 Field関数とdefault\_factoryを使うことで叶えられます。
+日付や uuid なんかは動的に生成したい時があると思いますが、 Field 関数と default_factory を使うことで叶えられます。
 
 ```Python
 class User(BaseModel):
@@ -151,7 +151,7 @@ print(user)
 
 ### 暗黙的な型変換を避ける
 
-以下の例ではidはintが正しいのに、モデルをインスタンス化する際にfloatの型を渡しています。 pydanticでは出力結果の正当性を保証するので、暗黙的にintに変換されてしまいます。
+以下の例では id は int が正しいのに、モデルをインスタンス化する際に float の型を渡しています。 pydantic では出力結果の正当性を保証するので、暗黙的に int に変換されてしまいます。
 
 ```Python
 class User(BaseModel):
@@ -182,7 +182,7 @@ except ValidationError as e:
 
 ### リテラル値のみを受けるようなフィールドを定義する
 
-決まった値しか入力されたくないフィールドってあると思います。 Booleanで解決できればいいですが、 もう少し種類が多い時、Literal型を使えば解決できます。
+決まった値しか入力されたくないフィールドってあると思います。 Boolean で解決できればいいですが、 もう少し種類が多い時、Literal 型を使えば解決できます。
 
 ```Python
 class User(BaseModel):
@@ -205,7 +205,7 @@ except ValidationError as e:
 
 便利な型が用意されています。 [https://docs.pydantic.dev/usage/types/#constrained-types](https://docs.pydantic.dev/usage/types/#constrained-types)
 
-以下は2文字以上、10文字以下しか受け付けないようなフィールドを宣言しています。
+以下は 2 文字以上、10 文字以下しか受け付けないようなフィールドを宣言しています。
 
 ```Python
 class User(BaseModel):
@@ -224,14 +224,14 @@ except ValidationError as e:
 
 ### 独自のバリデーターを作成したい時
 
-constrなどで基本の形のバリデーションはできますが、 全てに対応することは難しく、独自のバリデーターを作成したい時があると思います。 基本の形は以下になります。
+constr などで基本の形のバリデーションはできますが、 全てに対応することは難しく、独自のバリデーターを作成したい時があると思います。 基本の形は以下になります。
 
 ```Python
 class User(BaseModel):
     id: str
 
     @validator("id")
-    def int_is_prefix_a(cls, v):
+    def id_must_start_with_a(cls, v):
         if not v[0] == "a":
             raise ValidationError
         return v
@@ -294,7 +294,7 @@ except ValidationError as e:
 
 ### 辞書形式でエクスポートしたい時
 
-モデルを別で利用する時に、辞書形式の方が扱いやすいことがあると思います。 そんな時は、dict関数を使用することで叶えることができます。
+モデルを別で利用する時に、辞書形式の方が扱いやすいことがあると思います。 そんな時は、dict 関数を使用することで叶えることができます。
 
 ```Python
 class User(BaseModel):
@@ -311,7 +311,7 @@ try:
 
 ### イミュータブルにしたい
 
-frozenをTrueにしてあげると、イミュータブルになる。 ただし、ミュータブルなフィールド(リストなど)がイミュータブルになるわけではないので注意
+frozen を True にしてあげると、イミュータブルになる。 ただし、ミュータブルなフィールド(リストなど)がイミュータブルになるわけではないので注意
 
 ```Python
 class User(BaseModel):
@@ -325,4 +325,4 @@ class User(BaseModel):
 
 ## おわりに
 
-途中参加した案件でpydanticを使っていたのですが、コピペで使っていたのを 改めて学習すると改善できるところも見つかったのでよかったです。
+途中参加した案件で pydantic を使っていたのですが、コピペで使っていたのを 改めて学習すると改善できるところも見つかったのでよかったです。
